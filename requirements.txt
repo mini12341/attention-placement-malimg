@@ -1,0 +1,8 @@
+# Tested with Python 3.10 (conda env "malimg").
+# Install the PyTorch build that matches your CUDA driver first, e.g.
+#   pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+torch==2.6.0
+torchvision==0.21.0
+numpy>=1.26
+matplotlib>=3.8
+Pillow>=10.0

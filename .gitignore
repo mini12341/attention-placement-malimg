@@ -1,0 +1,20 @@
+# data (download separately; see README)
+data/
+*.npz
+
+# checkpoints and large binary outputs
+checkpoints/
+figures/
+
+# python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
