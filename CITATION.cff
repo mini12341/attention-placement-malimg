@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code, please cite the paper below."
-title: "Where Does Attention Matter? A Placement and Gate-Selectivity Study of SE/CBAM/ECA in Image-Based Malware Classification"
+title: "Where Does Attention Matter? A Gate-Level Audit of SE/CBAM/ECA Placement in Image-Based Malware Classification"
 authors:
   - family-names: Xiao
     given-names: Zhenghao

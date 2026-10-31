@@ -2,8 +2,8 @@
 
 Code and result data for the paper
 
-> **Where Does Attention Matter? A Placement and Gate-Selectivity Study of
-> SE/CBAM/ECA in Image-Based Malware Classification**
+> **Where Does Attention Matter? A Gate-Level Audit of SE/CBAM/ECA Placement
+> in Image-Based Malware Classification**
 > Zhenghao Xiao, Jianhua Mo, Shuo Yuan, Lin Li
 > *Journal of Information Security and Applications* (under review)
 
@@ -62,7 +62,8 @@ pip install -r requirements.txt
 ## Data
 
 **Full-resolution Malimg (primary).** 9,339 byteplot PNGs in 25 family folders,
-original variable size (widths 64-768, heights 209-992):
+original variable size (widths 64-1024, median 256; heights 208-5334,
+median 424):
 
 ```bash
 # https://huggingface.co/datasets/ikrambenabd/malimg-original
@@ -106,6 +107,7 @@ and accepts overrides:
 | Reduced-budget probe (3 epochs, 80 runs) | `python placement_sweep_budget.py 3` | ~3.2 h |
 | Data-limited probe (10% of train set, 80 runs) | `python placement_sweep_databudget.py 0.1` | ~4.5 h |
 | Check every table against `results/` | `python verify_tables.py` | seconds |
+| Check gate models reproduce the sweep | `python check_reproduction.py` | seconds |
 | Equivalence tests for "no placement effect" | `python stats_equivalence.py` | seconds |
 | ANOVA on the placement spread (Sec. 4.4) | `python stats_anova.py` | seconds |
 | Figure 1 | `python plot_structure.py` | seconds |
@@ -115,7 +117,7 @@ skipped on restart.
 
 **You do not need to retrain to check the tables.** The JSON files produced by
 the runs used in the paper are checked in under `results/`, so every number in
-Tables 1-5 and the spatial-gate paragraph can be recomputed in seconds. One
+Tables 1-6 and the spatial-gate paragraph can be recomputed in seconds. One
 command does the comparison for you:
 
 ```bash
@@ -158,8 +160,12 @@ Two consequences are worth knowing if you adapt this code:
   replaces it with `x.amax(dim=(2, 3), keepdim=True)`, which is numerically
   identical and has no parameters, so the model is unchanged.
 
-With these settings the three gate-analysis runs reproduce the corresponding
-sweep accuracies exactly (`"sweep_match": true` in `results/gate_stats_fullres.json`).
+With these settings the nine gate-analysis models (three modules x three seeds)
+reproduce the corresponding sweep curves exactly, epoch by epoch;
+`python check_reproduction.py` redoes the comparison. The `sweep_match` field
+stored in `results/gate_stats_fullres.json` reads false because it was written
+when the gate runs finished, before the final five-seed sweep file existed;
+recomputing it from the distributed files gives 9/9 identical.
 
 ## Layout
 
@@ -195,8 +201,8 @@ the corresponding author on request.
 
 ```bibtex
 @article{xiao2026attention,
-  title   = {Where Does Attention Matter? A Placement and Gate-Selectivity
-             Study of SE/CBAM/ECA in Image-Based Malware Classification},
+  title   = {Where Does Attention Matter? A Gate-Level Audit of SE/CBAM/ECA
+             Placement in Image-Based Malware Classification},
   author  = {Xiao, Zhenghao and Mo, Jianhua and Yuan, Shuo and Li, Lin},
   journal = {Journal of Information Security and Applications},
   year    = {2026},
